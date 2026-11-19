@@ -1589,12 +1589,12 @@ function applyTheme(mode){
   [...themeSeg.children].forEach(b=>b.classList.toggle('on',b.dataset.t===mode));
 }
 let themeMode='auto';
-try{themeMode=localStorage.getItem('ct-theme')||'light';}catch(e){}
+try{themeMode=localStorage.getItem('ct-theme-v2')||'light';}catch(e){}
 applyTheme(themeMode);
 themeSeg.addEventListener('click',e=>{
   const b=e.target.closest('[data-t]');if(!b)return;
   themeMode=b.dataset.t;
-  try{localStorage.setItem('ct-theme',themeMode);}catch(e){}
+  try{localStorage.setItem('ct-theme-v2',themeMode);}catch(e){}
   applyTheme(themeMode);
   toast(themeMode==='auto'?'外观：跟随系统':themeMode==='dark'?'已切换到深色模式 🌙':'已切换到浅色模式 ☀️');
 });
