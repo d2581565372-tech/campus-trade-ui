@@ -1,0 +1,195 @@
+/* ============================================================
+   校园闲置 · Apple Aurora 主题（用户提供的白天版令牌 + 补全夜间版）
+   - 浅色 = Aurora 白天版令牌（--accent #0071e3 等）
+   - 深色 = 苹果深色规范补全（#000 底 / #0a84ff 强调）
+   - 三种模式：浅色 / 深色 / 自动（跟随系统），由「我的」页切换，
+     存 localStorage('ct-theme')，html[data-theme] 手动覆盖系统偏好
+   - 站点旧变量与 --md-sys-color-* 全部映射到这套令牌
+   ============================================================ */
+
+/* ============ 1. Aurora 白天版令牌 ============ */
+:root {
+  /* 色 */
+  --bg: #ffffff;
+  --bg-subtle: #f5f5f7;
+  --text: #1d1d1f;
+  --text-2: #6e6e73;
+  --text-3: #86868b;
+  --border: rgba(0,0,0,.08);
+  --border-soft: rgba(0,0,0,.06);
+  --accent: #0071e3;
+  --accent-hover: #0077ed;
+  --link: #0066cc;
+  --accent-tint: rgba(0,113,227,.09);
+
+  /* 圆角 */
+  --r-sm: 10px;
+  --r-md: 16px;
+  --r-lg: 24px;
+  --r-xl: 32px;
+  --r-full: 980px;
+
+  /* 阴影 */
+  --shadow-md: 0 2px 8px rgba(0,0,0,.04), 0 8px 24px rgba(0,0,0,.06);
+  --shadow-lg: 0 4px 16px rgba(0,0,0,.06), 0 16px 48px rgba(0,0,0,.10);
+
+  /* 动效 */
+  --ease: cubic-bezier(.4,0,.2,1);
+  --dur: .3s;
+}
+
+/* ============ 2. 夜间版令牌（补全） ============ */
+:root[data-theme="dark"] {
+  --bg: #000;
+  --bg-subtle: #1c1c1e;
+  --text: #f5f5f7;
+  --text-2: rgba(235,235,245,.6);
+  --text-3: rgba(235,235,245,.4);
+  --border: rgba(255,255,255,.12);
+  --border-soft: rgba(255,255,255,.08);
+  --accent: #0a84ff;
+  --accent-hover: #259bff;
+  --link: #2997ff;
+  --accent-tint: rgba(41,151,255,.16);
+  --shadow-md: 0 2px 8px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.5);
+  --shadow-lg: 0 4px 16px rgba(0,0,0,.5), 0 16px 48px rgba(0,0,0,.6);
+}
+/* 自动模式：系统深色且用户未强制浅色时 */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #000;
+    --bg-subtle: #1c1c1e;
+    --text: #f5f5f7;
+    --text-2: rgba(235,235,245,.6);
+    --text-3: rgba(235,235,245,.4);
+    --border: rgba(255,255,255,.12);
+    --border-soft: rgba(255,255,255,.08);
+    --accent: #0a84ff;
+    --accent-hover: #259bff;
+    --link: #2997ff;
+    --accent-tint: rgba(41,151,255,.16);
+    --shadow-md: 0 2px 8px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.5);
+    --shadow-lg: 0 4px 16px rgba(0,0,0,.5), 0 16px 48px rgba(0,0,0,.6);
+  }
+}
+
+/* ============ 3. 站点旧变量 → Aurora 令牌 ============ */
+:root {
+  --cream:  var(--bg);
+  --cream-2:var(--bg-subtle);
+  --latte:  var(--text-2);
+  --latte-soft: var(--bg-subtle);
+  --latte-bg:  var(--bg-subtle);
+  --orange: var(--accent);
+  --orange-soft: var(--accent-tint);
+  --brown:  var(--text);
+  --text2:  var(--text-2);
+  --text3:  var(--text-3);
+  --line:   var(--border);
+  --shadow: var(--shadow-md);
+
+  /* 上一轮主题的兼容映射（style.css / app.js 中的引用） */
+  --md-sys-color-primary:             var(--accent);
+  --md-sys-color-primary-container:   var(--accent-tint);
+  --md-sys-color-secondary:           var(--text-2);
+  --md-sys-color-secondary-container: var(--bg-subtle);
+  --md-sys-color-tertiary-container:  var(--accent-tint);
+  --md-sys-color-surface:             var(--bg);
+  --md-sys-color-surface-container-high: var(--bg-subtle);
+  --md-sys-color-on-surface-variant:  var(--text-2);
+  --md-sys-color-outline-variant:     var(--border);
+  --primary-strong: var(--link);
+}
+
+/* ============ 4. Aurora 组件化改写 ============ */
+
+/* 系统字体 */
+body{
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+    "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
+  letter-spacing: -.005em;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+
+/* 干净底色（去网格纹） */
+.view{ background-image: none; background-color: var(--bg); transition: background-color var(--dur) var(--ease); }
+
+/* 磨砂玻璃：底部导航 */
+.tabbar{
+  background: color-mix(in srgb, var(--bg) 72%, transparent);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+  border-top: 1px solid var(--border);
+}
+.tab.active{ color: var(--accent); }
+.tab-publish{
+  background: var(--accent);
+  border: 3px solid color-mix(in srgb, var(--bg) 92%, transparent);
+  box-shadow: var(--shadow-lg);
+}
+.tab-publish:active{ background: var(--accent-hover); }
+
+/* 按钮 */
+.btn{ border-radius: var(--r-full); transition: background var(--dur) var(--ease), transform .2s var(--ease); }
+.btn:active{ transform: scale(.98); }
+.btn-orange{ background: var(--accent); color: #fff; box-shadow: none; }
+.btn-orange:hover{ background: var(--accent-hover); }
+.btn-latte{
+  background: var(--bg-subtle); color: var(--text);
+  border: 1px solid var(--border); box-shadow: none;
+}
+.btn-ghost{
+  background: transparent;
+  border: 1px solid var(--border); color: var(--link);
+}
+
+/* 卡片 / chip / 头像 */
+.card{ border: 1px solid var(--border-soft); border-radius: var(--r-lg); box-shadow: var(--shadow-md); }
+.chip{ background: var(--bg-subtle); color: var(--text-2); border-color: var(--border); border-radius: var(--r-full); }
+.chip.orange{ background: var(--accent-tint); color: var(--link); border-color: transparent; }
+.avatar{ background: var(--bg-subtle); color: var(--text); }
+.avatar.me{ background: var(--accent); color: #fff; }
+.back{
+  background: color-mix(in srgb, var(--bg) 72%, transparent);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid var(--border);
+}
+.sec-title::before{ background: var(--accent); border-radius: var(--r-full); }
+
+/* 桌面端介绍区标题用苹果字号 */
+.desktop-brand h1{ font-size: clamp(40px,6vw,80px); letter-spacing: -.03em; }
+.db-slogan{ font-size: clamp(24px,2.5vw,28px); color: var(--text-2); }
+
+/* 商品图占位 / 弹窗 */
+.gimg{ background: var(--bg-subtle) !important; }
+.overlay{
+  background: rgba(0,0,0,.42);
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+}
+.rec-modal{ border-radius: var(--r-xl); box-shadow: var(--shadow-lg); background: var(--bg); }
+
+/* ============ 5. 日夜切换分段控件（iOS 风格） ============ */
+.theme-seg{
+  display: flex; gap: 2px;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--r-full);
+  padding: 3px;
+}
+.theme-seg button{
+  border: none; background: transparent;
+  font-family: inherit; font-size: 12px; font-weight: 600;
+  letter-spacing: -.01em;
+  color: var(--text-2);
+  padding: 6px 12px; border-radius: var(--r-full);
+  cursor: pointer;
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.theme-seg button.on{
+  background: var(--card);
+  color: var(--accent);
+  box-shadow: var(--shadow-md);
+}
