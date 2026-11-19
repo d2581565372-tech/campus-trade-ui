@@ -8,7 +8,7 @@
 <script>
 /* 首屏前应用已保存的主题，避免闪白/闪黑 */
 try{
-  var _t=localStorage.getItem('ct-theme')||'auto';
+  var _t=localStorage.getItem('ct-theme')||'light';
   if(_t==='dark')document.documentElement.dataset.theme='dark';
   else if(_t==='light')document.documentElement.dataset.theme='light';
 }catch(e){}

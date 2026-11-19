@@ -1589,7 +1589,7 @@ function applyTheme(mode){
   [...themeSeg.children].forEach(b=>b.classList.toggle('on',b.dataset.t===mode));
 }
 let themeMode='auto';
-try{themeMode=localStorage.getItem('ct-theme')||'auto';}catch(e){}
+try{themeMode=localStorage.getItem('ct-theme')||'light';}catch(e){}
 applyTheme(themeMode);
 themeSeg.addEventListener('click',e=>{
   const b=e.target.closest('[data-t]');if(!b)return;
@@ -1602,6 +1602,8 @@ matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{
   if(themeMode==='auto')applyTheme('auto');
 });
 
-/* ---------- 启动 ---------- */
+/* ---------- 启动：最先进入登录页 ---------- */
 mqConnect();
-showView('splash');
+showView('login');
+const savedMe=getStore('me');
+if(savedMe&&savedMe.name)$('#liName').value=savedMe.name;   /* 注册过的自动填用户名 */
