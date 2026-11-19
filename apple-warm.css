@@ -17,10 +17,10 @@
   --text-3: #86868b;
   --border: rgba(0,0,0,.08);
   --border-soft: rgba(0,0,0,.06);
-  --accent: #0071e3;
-  --accent-hover: #0077ed;
-  --link: #0066cc;
-  --accent-tint: rgba(0,113,227,.09);
+  --accent: #ffcc00;                     /* 苹果黄 */
+  --accent-hover: #e6b800;
+  --link: #9a6f00;                       /* 深金：浅底上的黄系文字（可读） */
+  --accent-tint: rgba(255,204,0,.16);
 
   /* 圆角 */
   --r-sm: 10px;
@@ -47,10 +47,10 @@
   --text-3: rgba(235,235,245,.4);
   --border: rgba(255,255,255,.12);
   --border-soft: rgba(255,255,255,.08);
-  --accent: #0a84ff;
-  --accent-hover: #259bff;
-  --link: #2997ff;
-  --accent-tint: rgba(41,151,255,.16);
+  --accent: #ffd60a;                     /* 深色模式下的苹果黄 */
+  --accent-hover: #ffe14d;
+  --link: #ffd60a;
+  --accent-tint: rgba(255,214,10,.18);
   --shadow-md: 0 2px 8px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.5);
   --shadow-lg: 0 4px 16px rgba(0,0,0,.5), 0 16px 48px rgba(0,0,0,.6);
 }
@@ -64,10 +64,10 @@
     --text-3: rgba(235,235,245,.4);
     --border: rgba(255,255,255,.12);
     --border-soft: rgba(255,255,255,.08);
-    --accent: #0a84ff;
-    --accent-hover: #259bff;
-    --link: #2997ff;
-    --accent-tint: rgba(41,151,255,.16);
+    --accent: #ffd60a;
+    --accent-hover: #ffe14d;
+    --link: #ffd60a;
+    --accent-tint: rgba(255,214,10,.18);
     --shadow-md: 0 2px 8px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.5);
     --shadow-lg: 0 4px 16px rgba(0,0,0,.5), 0 16px 48px rgba(0,0,0,.6);
   }
@@ -128,13 +128,14 @@ body{
   background: var(--accent);
   border: 3px solid color-mix(in srgb, var(--bg) 92%, transparent);
   box-shadow: var(--shadow-lg);
+  color: #1d1d1f;
 }
 .tab-publish:active{ background: var(--accent-hover); }
 
 /* 按钮 */
 .btn{ border-radius: var(--r-full); transition: background var(--dur) var(--ease), transform .2s var(--ease); }
 .btn:active{ transform: scale(.98); }
-.btn-orange{ background: var(--accent); color: #fff; box-shadow: none; }
+.btn-orange{ background: var(--accent); color: #1d1d1f; box-shadow: none; }
 .btn-orange:hover{ background: var(--accent-hover); }
 .btn-latte{
   background: var(--bg-subtle); color: var(--text);
@@ -150,7 +151,7 @@ body{
 .chip{ background: var(--bg-subtle); color: var(--text-2); border-color: var(--border); border-radius: var(--r-full); }
 .chip.orange{ background: var(--accent-tint); color: var(--link); border-color: transparent; }
 .avatar{ background: var(--bg-subtle); color: var(--text); }
-.avatar.me{ background: var(--accent); color: #fff; }
+.avatar.me{ background: var(--accent); color: #1d1d1f; }
 .back{
   background: color-mix(in srgb, var(--bg) 72%, transparent);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
@@ -190,6 +191,17 @@ body{
 }
 .theme-seg button.on{
   background: var(--card);
-  color: var(--accent);
+  color: var(--link);
   box-shadow: var(--shadow-md);
+}
+
+/* ============ 消息提醒：苹果红 ============ */
+.tab .unread,
+.m-unread{
+  background: #ff3b30;                  /* Apple systemRed */
+  color: #fff;
+}
+.bdot{
+  background: #ff3b30;
+  border-color: var(--card);
 }
